@@ -19,7 +19,7 @@ class StudyBuddyGenerator:
         for chunk in chunks:
             prompt+=chunk
             
-        content={"question":question,"prompt":prompt}
-        response=self.client.invoke({"messages":[{"role":"user","content":""}]})   
+        content=f"Context:{prompt}\n\nQuestion:{question}"
+        response=self.client.invoke({"messages":[{"role":"user","content":content}]})   
         return response.content
             
