@@ -2,7 +2,6 @@ class StudyBuddyRetriever:
     def __init__(self,model,collection):
         self.model=model
         self.collection=collection
-        
     
     def retrieve(self, question: str) -> list[str]:
         query_embedding=self.model.encode([question])
@@ -11,3 +10,16 @@ class StudyBuddyRetriever:
             n_results=3
         )
         return results['documents'][0]
+
+class StudyBuddyGenerator:
+    def __init__(self,client):
+        self.client=client
+    def generate(self, question: str,chunks:list[str]) -> str:
+        prompt=""
+        for chunk in chunks:
+            prompt+=chunk
+            
+        content={"question":question,"prompt":prompt}
+        response=self.client.invoke({"messages":[{"role":"user","content":""}]})   
+        return response.content
+            
