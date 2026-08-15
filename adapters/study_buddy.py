@@ -1,3 +1,4 @@
+from langchain_core.messages import HumanMessage
 class StudyBuddyRetriever:
     def __init__(self,model,collection):
         self.model=model
@@ -20,6 +21,6 @@ class StudyBuddyGenerator:
             prompt+=chunk
             
         content=f"Context:{prompt}\n\nQuestion:{question}"
-        response=self.client.invoke({"messages":[{"role":"user","content":content}]})   
+        response=self.client.invoke([HumanMessage(content=content)])   
         return response.content
             
