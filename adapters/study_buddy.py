@@ -1,4 +1,5 @@
 from langchain_core.messages import HumanMessage
+from pypdf import PdfReader
 class StudyBuddyRetriever:
     def __init__(self,model,collection):
         self.model=model
@@ -11,6 +12,25 @@ class StudyBuddyRetriever:
             n_results=3
         )
         return results['documents'][0]
+    
+    def process_pdf(self,file_path):
+        model=self.model
+        collection=self.collection
+        reader=PdfReader(file_path)
+        text=""
+        for page in reader.pages:
+            text+=page.extract_text()
+        chunks = []
+        for i in range(0, len(text), 500):
+            chunks.append(text[i:i+500])
+
+        embeddings = model.encode(chunks)
+        collection.add(
+            documents=chunks,
+            embeddings=embeddings.tolist(),
+            ids=[str(i) for i in range(len(chunks))]
+        )    
+    
 
 class StudyBuddyGenerator:
     def __init__(self,client):
