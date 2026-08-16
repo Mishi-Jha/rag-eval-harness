@@ -1,0 +1,49 @@
+[
+  {
+    "id": "os-001",
+    "question": "What is dual mode operation in an OS, and how does the mode bit work?",
+    "expected_answer": "Dual mode operation means a processor supports two modes of execution: kernel mode (also called protected/supervisor/system/monitor/privileged mode) and user mode. A mode bit in the hardware indicates which mode is active: when the mode bit is 0, the processor is in kernel mode; when it is 1, the processor is in user mode. This separation lets the OS restrict which instructions a running program can execute, protecting the system from misbehaving or malicious user programs.",
+    "source_chunks": [
+      "1.6 Dual Mode Operations: A processor can support two modes of execution: user mode and kernel mode. Kernel / Protected / Supervisor / System / Monitor / Privileged mode. User mode / Non-privileged mode. Mode bit decides which mode is active. Mode bit = 0: kernel mode. Mode bit = 1: user mode."
+    ],
+    "source_page": 42
+  },
+  {
+    "id": "os-002",
+    "question": "What is a system call, and why is it needed?",
+    "expected_answer": "A system call is the interface/entry point that lets a user-level process request a service from the operating system kernel. Since user programs run in user mode and cannot directly access hardware or privileged instructions, any program that needs OS-managed resources (like files, memory, or I/O) must go through a system call to request that service from the kernel. System calls are described as the only entry points into the kernel.",
+    "source_chunks": [
+      "1.9 System Call: System calls are the entry points into the kernel system. Provides OS services to user programs via an Application Program Interface (API). Acts as an interface between a process and the operating system. Allows user-level processes to request OS services. All programs needing resources must use system calls. System calls are the only entry points into the kernel system."
+    ],
+    "source_page": 52
+  },
+  {
+    "id": "os-003",
+    "question": "What's the difference between kernel mode and user mode?",
+    "expected_answer": "Kernel mode gives full access to the machine's instruction set and direct access to hardware such as memory and I/O devices; device drivers must run in kernel mode. User mode restricts direct hardware access — a program in user mode has limited access to machine instructions and must route any hardware access through the OS via a system call or trap, rather than accessing hardware directly.",
+    "source_chunks": [
+      "1.6.1 Kernel Mode: Kernel mode gives full access to hardware and the machine instruction set. Full access to the machine instruction set. Direct access to hardware such as memory and I/O devices. Device drivers must run in kernel mode.",
+      "1.6.2 User Mode: User mode restricts direct hardware access and routes sensitive work through the OS. Limited access to machine instructions. No direct access to hardware. Hardware access is coordinated by the OS."
+    ],
+    "source_page": [43, 44]
+  },
+  {
+    "id": "os-004",
+    "question": "What is a monolithic kernel, and what's its main disadvantage?",
+    "expected_answer": "A monolithic kernel is a kernel design where all OS services (file system, memory management, I/O, scheduler, drivers) operate together in kernel space. This gives good performance since services run close together, but the main disadvantage is that it creates complex dependencies between system components, resulting in a huge code base that can reach millions of lines.",
+    "source_chunks": [
+      "Monolithic Kernel: All OS services operate in kernel space. Good performance because services run close together. Disadvantage: dependencies between system components. Complex and huge code base; may reach millions of lines."
+    ],
+    "source_page": 66
+  },
+  {
+    "id": "os-005",
+    "question": "How does a microkernel differ from a monolithic kernel?",
+    "expected_answer": "A microkernel takes a minimalist approach: only essential services like IPC (inter-process communication), virtual memory, and thread scheduling stay in kernel space. Everything else — device drivers, networking, file system, user interface — runs in user space instead. This is the opposite of a monolithic kernel, which keeps all OS services in kernel space. The microkernel tradeoff is more stability (fewer things can crash the kernel) at the cost of more system calls and context switches between user and kernel space.",
+    "source_chunks": [
+      "Microkernel: The microkernel keeps only essential services in kernel space. Minimalist approach. Includes IPC, virtual memory and thread scheduling. Rest of the services run in user space. Device drivers, networking, file system and user interface can be outside kernel space. More stable with fewer services in kernel space.",
+      "Kernel Designs: Quick Comparison. Monolithic: Good performance, Complex dependencies and huge code. Microkernel: Modular and generally more stable, Many system calls and context switches."
+    ],
+    "source_page": 67
+  }
+]
