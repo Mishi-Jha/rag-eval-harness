@@ -35,6 +35,7 @@ class StudyBuddyRetriever:
 class StudyBuddyGenerator:
     def __init__(self,client):
         self.client=client
+        self.last_usage=None
     def generate(self, question: str,chunks:list[str]) -> str:
         prompt=""
         for chunk in chunks:
@@ -42,5 +43,6 @@ class StudyBuddyGenerator:
             
         content=f"Context:{prompt}\n\nQuestion:{question}"
         response=self.client.invoke([HumanMessage(content=content)])   
+        self.last_usage=response.usage_metadata
         return response.content
             
